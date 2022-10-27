@@ -73,6 +73,7 @@
 
       calcTranslate(index, activeIndex, isVertical) {
         const distance = this.$parent.$el[isVertical ? 'offsetHeight' : 'offsetWidth'];
+        console.log(index,activeIndex);
         return distance * (index - activeIndex);
       },
 

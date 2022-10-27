@@ -44,7 +44,6 @@ export default class Store {
   }
 
   getFlattedNodes(leafOnly, cached = true) {
-    debugger
     const cachedNodes = leafOnly ? this.leafNodes : this.flattedNodes;
     return cached
       ? cachedNodes

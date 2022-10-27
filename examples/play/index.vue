@@ -1,17 +1,43 @@
 <template>
   <div style="margin: 20px">
     <!-- <el-input v-model="input" placeholder="请输入内容"></el-input> -->
-    <el-cascader
+    <!-- <el-cascader
       :props="props"
       class="map_select"
       filterable
       @change="handleChange"
-    ></el-cascader>
+    ></el-cascader> -->
+    <template>
+      <el-carousel indicator-position="none" :interval="10000">
+        <el-carousel-item v-for="item in 5" :key="item">
+          <h3>{{ item }}</h3>
+        </el-carousel-item>
+      </el-carousel>
+    </template>
   </div>
 </template>
 
+<style>
+.el-carousel__item h3 {
+  text-align: center;
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 300px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+</style>
+
 <script>
- let id = 0;
+let id = 0;
 export default {
   data() {
     return {

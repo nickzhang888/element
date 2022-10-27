@@ -5,26 +5,26 @@ const LOAD_MAP = {
   'zh-CN': name => {
     return r => require.ensure([], () =>
       r(require(`./pages/zh-CN/${name}.vue`)),
-    'zh-CN');
+      'zh-CN');
   },
   'en-US': name => {
     return r => require.ensure([], () =>
       r(require(`./pages/en-US/${name}.vue`)),
-    'en-US');
+      'en-US');
   },
   'es': name => {
     return r => require.ensure([], () =>
       r(require(`./pages/es/${name}.vue`)),
-    'es');
+      'es');
   },
   'fr-FR': name => {
     return r => require.ensure([], () =>
       r(require(`./pages/fr-FR/${name}.vue`)),
-    'fr-FR');
+      'fr-FR');
   }
 };
 
-const load = function(lang, path) {
+const load = function (lang, path) {
   return LOAD_MAP[lang](path);
 };
 
@@ -32,26 +32,26 @@ const LOAD_DOCS_MAP = {
   'zh-CN': path => {
     return r => require.ensure([], () =>
       r(require(`./docs/zh-CN${path}.md`)),
-    'zh-CN');
+      'zh-CN');
   },
   'en-US': path => {
     return r => require.ensure([], () =>
       r(require(`./docs/en-US${path}.md`)),
-    'en-US');
+      'en-US');
   },
   'es': path => {
     return r => require.ensure([], () =>
       r(require(`./docs/es${path}.md`)),
-    'es');
+      'es');
   },
   'fr-FR': path => {
     return r => require.ensure([], () =>
       r(require(`./docs/fr-FR${path}.md`)),
-    'fr-FR');
+      'fr-FR');
   }
 };
 
-const loadDocs = function(lang, path) {
+const loadDocs = function (lang, path) {
   return LOAD_DOCS_MAP[lang](path);
 };
 
@@ -59,12 +59,14 @@ const registerRoute = (navConfig) => {
   let route = [];
   Object.keys(navConfig).forEach((lang, index) => {
     let navs = navConfig[lang];
+    // load函数表示调用LOAD_MAP函数./pages/zh-CN/${name}.vue
     route.push({
-      path: `/${ lang }/component`,
-      redirect: `/${ lang }/component/installation`,
+      path: `/${lang}/component`,
+      redirect: `/${lang}/component/installation`,
       component: load(lang, 'component'),
       children: []
     });
+    //nav.config.json里各个语言有自身的groups和children
     navs.forEach(nav => {
       if (nav.href) return;
       if (nav.groups) {
@@ -105,10 +107,10 @@ const registerRoute = (navConfig) => {
 
 let route = registerRoute(navConfig);
 
-const generateMiscRoutes = function(lang) {
+const generateMiscRoutes = function (lang) {
   let guideRoute = {
-    path: `/${ lang }/guide`, // 指南
-    redirect: `/${ lang }/guide/design`,
+    path: `/${lang}/guide`, // 指南
+    redirect: `/${lang}/guide/design`,
     component: load(lang, 'guide'),
     children: [{
       path: 'design', // 设计原则
@@ -124,7 +126,7 @@ const generateMiscRoutes = function(lang) {
   };
 
   let themeRoute = {
-    path: `/${ lang }/theme`,
+    path: `/${lang}/theme`,
     component: load(lang, 'theme-nav'),
     children: [
       {
@@ -142,14 +144,14 @@ const generateMiscRoutes = function(lang) {
   };
 
   let resourceRoute = {
-    path: `/${ lang }/resource`, // 资源
+    path: `/${lang}/resource`, // 资源
     meta: { lang },
     name: 'resource' + lang,
     component: load(lang, 'resource')
   };
 
   let indexRoute = {
-    path: `/${ lang }`, // 首页
+    path: `/${lang}`, // 首页
     meta: { lang },
     name: 'home' + lang,
     component: load(lang, 'index')
@@ -185,5 +187,6 @@ route = route.concat([{
   path: '*',
   redirect: defaultPath
 }]);
+console.log(route);
 
 export default route;
